@@ -42,8 +42,12 @@ function calcEverything(string $arithmeticOperation, ...$numbers)
 //function task3
 function multiplicationTable(int $rows, int $cols)
 {
-    if (!$rows || !$cols) {
-        echo "Умноженое на ноль равняется нулю!";
+    if (empty($rows)) {
+        echo "Не указано количество строк";
+        return;
+    } elseif (empty($cols)) {
+        echo "Не указано количество столбцов";
+        return;
     } else {
         echo "<table>";
         for ($tr = 1; $tr <= $rows; $tr++) {

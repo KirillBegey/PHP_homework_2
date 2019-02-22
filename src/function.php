@@ -1,65 +1,54 @@
 <?php
 //function task1
-function arrayOutput($array, $oneLine=0)
+function printStrings($strings, $oneLine=false)
 {
-    if ($oneLine) {
-        foreach ($array as $value) {
-            echo "$value ";
+    if (!$oneLine) {
+        foreach ($strings as $string) {
+            echo "<p> $string </p>";
         }
     } else {
-        foreach ($array as $value) {
-            echo "<p> $value </p>";
-        }
+        echo implode($strings);
     }
 }
 
 //function task2
 function calcEverything(string $arithmeticOperation, ...$numbers)
 {
-    $calc = [];
-    foreach ($numbers as $number) {
-        $calc[] = $number;
-    }
     switch ($arithmeticOperation) {
         case "+":
-            $result = array_sum($calc);
+            $result = array_sum($numbers);
             break;
         case "-":
-            $firstNumberDifference = array_shift($calc);
-            $secondNumberDifference = array_sum($calc);
+            $firstNumberDifference = array_shift($numbers);
+            $secondNumberDifference = array_sum($numbers);
             $result = $firstNumberDifference - $secondNumberDifference;
             break;
         case "*":
-            $result = array_product($calc);
+            $result = array_product($numbers);
             break;
         case "/":
-            $firstNumberDivision = array_shift($calc);
-            $secondNumberDivision = array_product($calc);
-            $result = $firstNumberDivision % $secondNumberDivision;
+            $firstNumberDivision = array_shift($numbers);
+            $secondNumberDivision = array_product($numbers);
+            $result = $firstNumberDivision / $secondNumberDivision;
             break;
     }
-    return $result;
+    if ($firstNumberDivision) {
+        return $firstNumberDivision . "/" . implode($arithmeticOperation, $numbers) . " = " . $result;
+    } else {
+        return implode($arithmeticOperation, $numbers) . " = " . $result;
+    }
 }
 
 //function task3
-function multiplicationTable(...$numbers)
+function multiplicationTable(int $rows, int $cols)
 {
-    $arrayNubbers = [];
-    foreach ($numbers as $number) {
-        $arrayNubbers[] = $number;
-    }
-    $arrayLength = count($arrayNubbers);
-    if($arrayLength > 2) {
-        echo "Вы ввели больше 2х аргументов!";
-    } elseif ($arrayLength == 1) {
-        echo "Введите еще один аргумент!";
-    } elseif ($arrayLength == 0) {
-        echo "Вы не ввели аргументы!";
+    if (!$rows || !$cols) {
+        echo "Умноженое на ноль равняется нулю!";
     } else {
         echo "<table>";
-        for ($tr = 1; $tr <= $arrayNubbers[0]; $tr++) {
+        for ($tr = 1; $tr <= $rows; $tr++) {
             echo "<tr>";
-            for ($td = 1; $td <= $arrayNubbers[1]; $td++) {
+            for ($td = 1; $td <= $cols; $td++) {
                 echo "<td>";
                 $result = $tr * $td;
                 echo $result;
@@ -71,12 +60,12 @@ function multiplicationTable(...$numbers)
     }
 }
 
+
 //function task4
-function theCurrentDate()
+function currentDate()
 {
     date_default_timezone_set("Europe/Moscow");
-    $timeIsNow = date('d.m.Y H:i');
-    echo $timeIsNow;
+    echo date('d.m.Y H:i');
     echo "<br>";
 }
 function customDate($date)
@@ -85,19 +74,18 @@ function customDate($date)
 }
 
 //function task5
-function letterRemoval($string)
+function letterRemoval($letter, $string)
 {
-    echo str_replace('К', '', $string);
+    echo str_replace($letter, '', $string);
 }
-function wordReplacement($string)
+function wordReplacement($deleteWord, $insertWord, $string)
 {
-    echo str_replace('Две', 'Три', $string);
+    echo str_replace($deleteWord, $insertWord, $string);
 }
 
 //function task6
 function workWithFile()
 {
-    $openFile = fopen("test.txt", "w");
-    fwrite($openFile, "Hello again!");
+    file_put_contents("test.txt", "Hello again!");
     echo file_get_contents('test.txt');
 }
